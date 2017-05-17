@@ -1,5 +1,8 @@
-Meteor.publish('messages', function () {
-  const user = Meteor.users.findOne(this.userId)
+import { Meteor } from 'meteor/meteor'
 
-  return Messages.find({ user: user.username }, { limit: 5, sort: { created: 1 }})
+Meteor.publish('messages', function () {
+  return Messages.find({}, {
+    limit: 5,
+    sort: { date: -1 },
+  })
 })

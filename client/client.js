@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { mount } from 'react-mounter'
 import { Meteor } from 'meteor/meteor'
-import { Accounts } from ''
+import { Accounts } from 'meteor/accounts-base'
 import { createContainer } from 'meteor/react-meteor-data'
 import Blaze from 'meteor/gadicc:blaze-react-component'
 
@@ -31,7 +31,7 @@ class App extends Component {
 
     const {
       messages,
-      ready
+      ready,
     } = this.props
 
     if (!ready) {
@@ -50,7 +50,7 @@ class App extends Component {
         ))}
         <form onSubmit={this.send}>
           <input
-            value={this.state.val}
+            value={this.state.message}
             onChange={(e) => {
               this.setState({ message: e.currentTarget.value })
             }}
@@ -63,7 +63,6 @@ class App extends Component {
 }
 
 const AppContainer = createContainer(() => {
-
   const subscriptionHandle = Meteor.subscribe('messages')
   const messages = Messages.find().fetch()
 
@@ -71,7 +70,6 @@ const AppContainer = createContainer(() => {
     messages,
     ready: subscriptionHandle.ready(),
   }
-
 }, App)
 
 mount(AppContainer)
